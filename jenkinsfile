@@ -7,6 +7,7 @@ pipeline {
         DOCKER_CREDENTIALS_ID = 'docker-hub-credentials'
     }
 
+
     stages {
         stage('Clone Repository') {
             steps {
