@@ -38,26 +38,26 @@ pipeline {
                 }
             }
         }
-        stage('Deploy on Kubernetes') {
-            steps {
-                script {
-                    sh '''
-                        export KUBECONFIG=/var/jenkins_home/kube
-                        kubectl set image deployment/web-app-depl web-application=${DOCKER_IMAGE} --record
-                    '''
-                }
-            }
-        }
-        stage('Rollout Status') {
-            steps {
-                script {
-                    sh '''
-                        export KUBECONFIG=/var/jenkins_home/kube
-                        kubectl rollout status deployment/web-app-depl
-                        echo "Rollout Done"
-                    '''
-                }
-            }
-        }
-    }
+    //     stage('Deploy on Kubernetes') {
+    //         steps {
+    //             script {
+    //                 sh '''
+    //                     export KUBECONFIG=/var/jenkins_home/kube
+    //                     kubectl set image deployment/web-app-depl web-application=${DOCKER_IMAGE} --record
+    //                 '''
+    //             }
+    //         }
+    //     }
+    //     stage('Rollout Status') {
+    //         steps {
+    //             script {
+    //                 sh '''
+    //                     export KUBECONFIG=/var/jenkins_home/kube
+    //                     kubectl rollout status deployment/web-app-depl
+    //                     echo "Rollout Done"
+    //                 '''
+    //             }
+    //         }
+    //     }
+    // }
 }
