@@ -1,11 +1,11 @@
+
 pipeline {
     agent any
 
     environment {
         DOCKER_IMAGE = "sadokbarbouche/tp-k8s"
-        GIT_REPO = "https://github.com/SadokBarbouche/tp-k8s"
+        GIT_REPO = "https://github.com/SadokBarbouche/tp-k8s.git"
         DOCKER_CREDENTIALS_ID = 'docker-token'
-        KUBECONFIG_PATH = "/var/jenkins_home/kube" // Adjust if your kubeconfig path is different
     }
 
     stages {
@@ -22,13 +22,12 @@ pipeline {
                 }
             }
         }
-
+        
         stage('Push Docker Image') {
             steps {
-                withCredentials([usernamePassword(
-                    credentialsId: DOCKER_CREDENTIALS_ID, 
-                    usernameVariable: 'DOCKER_USERNAME', 
-                    passwordVariable: 'DOCKER_PASSWORD')]) {
+                withCredentials([usernamePassword(credentialsId: 'docker-token', 
+                                                 usernameVariable: 'DOCKER_USERNAME', 
+                                                 passwordVariable: 'DOCKER_PASSWORD')]) {
                     script {
                         sh '''
                             echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
@@ -36,29 +35,6 @@ pipeline {
                             docker logout
                         '''
                     }
-                }
-            }
-        }
-
-        stage('Deploy on Kubernetes') {
-            steps {
-                script {
-                    sh """
-                        export KUBECONFIG=${KUBECONFIG_PATH}
-                        kubectl set image deployment/web-app-depl web-application=${DOCKER_IMAGE} --record
-                    """
-                }
-            }
-        }
-
-        stage('Rollout Status') {
-            steps {
-                script {
-                    sh """
-                        export KUBECONFIG=${KUBECONFIG_PATH}
-                        kubectl rollout status deployment/web-app-depl
-                        echo "Rollout Done"
-                    """
                 }
             }
         }
