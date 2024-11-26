@@ -4,7 +4,7 @@ pipeline {
     environment {
         DOCKER_IMAGE = "sadokbarbouche/tp-k8s"
         GIT_REPO = "https://github.com/SadokBarbouche/tp-k8s"
-        DOCKER_CREDENTIALS_ID = 'docker-creds'
+        DOCKER_CREDENTIALS_ID = 'docker-token'
     }
 
 
@@ -25,7 +25,7 @@ pipeline {
         
         stage('Push Docker Image') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'docker-creds', 
+                withCredentials([usernamePassword(credentialsId: 'docker-token', 
                                                  usernameVariable: 'DOCKER_USERNAME', 
                                                  passwordVariable: 'DOCKER_PASSWORD')]) {
                     script {
