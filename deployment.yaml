@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nodejs-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nodejs-app
+  template:
+    metadata:
+      labels:
+        app: nodejs-app
+    spec:
+      containers:
+      - name: nodejs-container
+        # image: sadokbarbouche/dummy-app:v1 
+        # image: sadokbarbouche/dummy-app:v1.1
+        image: sadokbarbouche/dummy-app:v2
+        
+        ports:
+        - containerPort: 3000
