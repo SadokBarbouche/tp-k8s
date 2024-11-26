@@ -4,7 +4,7 @@ pipeline {
     environment {
         DOCKER_IMAGE = "sadokbarbouche/tp-k8s"
         GIT_REPO = "https://github.com/SadokBarbouche/tp-k8s"
-        DOCKER_CREDENTIALS_ID = 'docker-token'
+        DOCKER_CREDENTIALS_ID = 'docker-creds'
     }
 
 
